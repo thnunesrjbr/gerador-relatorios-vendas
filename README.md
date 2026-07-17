@@ -18,6 +18,7 @@ O projeto permite calcular o valor total das vendas, o valor vendido por produto
 - Execução por linha de comando.
 - Testes automatizados com pytest.
 - Medição de cobertura com pytest-cov.
+- Documentação comentada para estudo.
 
 ## Tecnologias utilizadas
 
@@ -35,24 +36,75 @@ As bibliotecas `csv`, `argparse`, `json` e `logging` fazem parte da biblioteca p
 ## Estrutura do projeto
 
 ```text
-vendas/
+gerador-relatorios-vendas/
+├── .gitignore
+├── README.md
 ├── cli.py
 ├── core.py
 ├── pyproject.toml
-├── README.md
 ├── vendas_exemplo.csv
-└── tests/
-    └── test_core.py
+├── tests/
+│   └── test_core.py
+└── docs/
+    └── codigo_comentado/
+        ├── README.md
+        ├── cli_comentado.py
+        ├── core_comentado.py
+        ├── pyproject_comentado.md
+        └── test_core_comentado.py
 ```
 
-### Descrição dos arquivos
+## Descrição dos arquivos principais
 
 - `core.py`: contém a leitura do CSV e as regras de negócio do relatório.
 - `cli.py`: contém os argumentos do terminal e a exibição dos resultados.
 - `pyproject.toml`: contém as configurações de instalação, testes e criação do comando `vendas-cli`.
 - `vendas_exemplo.csv`: arquivo utilizado para demonstrar o funcionamento do projeto.
 - `tests/test_core.py`: contém os testes automatizados do módulo `core.py`.
-- `README.md`: contém a documentação do projeto.
+- `README.md`: contém a documentação principal do projeto.
+- `.gitignore`: informa ao Git quais arquivos temporários não devem ser enviados ao repositório.
+
+## Documentação comentada
+
+A pasta:
+
+```text
+docs/codigo_comentado
+```
+
+contém versões didáticas e detalhadamente comentadas dos principais arquivos do projeto.
+
+Essa documentação foi criada para ajudar iniciantes a entender como cada parte funciona.
+
+Os arquivos disponíveis são:
+
+- `core_comentado.py`: explicação detalhada da leitura do CSV e da geração do relatório.
+- `cli_comentado.py`: explicação detalhada da linha de comando, da saída em texto e JSON e do tratamento de erros.
+- `test_core_comentado.py`: explicação detalhada dos testes automatizados.
+- `pyproject_comentado.md`: explicação detalhada da instalação e configuração do projeto.
+- `README.md`: índice da documentação e ordem recomendada de estudo.
+
+Os arquivos comentados são apenas material de estudo.
+
+O programa verdadeiro continua utilizando:
+
+```text
+core.py
+cli.py
+pyproject.toml
+tests/test_core.py
+```
+
+## Ordem recomendada de estudo
+
+Para entender o projeto de forma progressiva, a ordem sugerida é:
+
+```text
+1. docs/codigo_comentado/core_comentado.py
+2. docs/codigo_comentado/cli_comentado.py
+3. docs/codigo_comentado/test_core_comentado.py
+4. docs/codigo_comentado/pyproject_comentado.md
+```
 
 ## Formato esperado do CSV
 
@@ -150,7 +202,7 @@ O caminho do arquivo é um argumento obrigatório.
 vendas-cli vendas_exemplo.csv
 ```
 
-Também é possível informar o caminho completo:
+Também é possível informar um caminho completo:
 
 ```powershell
 vendas-cli "C:\Users\Usuario\Documentos\vendas.csv"
@@ -171,6 +223,24 @@ vendas-cli vendas_exemplo.csv --format text
 
 ```powershell
 vendas-cli vendas_exemplo.csv --format json
+```
+
+## Funcionamento geral
+
+O fluxo principal do programa é:
+
+```text
+Usuário executa vendas-cli
+        ↓
+cli.py recebe os argumentos
+        ↓
+ler_vendas() abre o CSV
+        ↓
+as linhas são convertidas em dicionários
+        ↓
+gerar_relatorio() realiza os cálculos
+        ↓
+cli.py exibe o resultado em texto ou JSON
 ```
 
 ## Testes automatizados
@@ -210,7 +280,7 @@ core.py      34      1    97%   47
 TOTAL        34      1    97%
 ```
 
-A cobertura atual do módulo `core.py` é de 97%.
+A cobertura obtida no módulo `core.py` foi de 97%.
 
 ## Tratamento de erros
 
@@ -228,10 +298,46 @@ Os erros são apresentados no terminal por meio do módulo `logging`.
 
 O programa tenta ler o arquivo utilizando as seguintes codificações:
 
-1. UTF-8 com suporte a BOM;
+1. UTF-8 com suporte a BOM.
 2. CP1252.
 
 Essa estratégia permite trabalhar com arquivos CSV gerados por diferentes programas no Windows.
+
+## Instalação editável
+
+O projeto é instalado utilizando:
+
+```powershell
+python -m pip install -e ".[dev]"
+```
+
+A opção `-e` significa instalação editável.
+
+Isso permite alterar os arquivos do projeto sem precisar reinstalar o programa após cada modificação.
+
+O grupo `[dev]` instala também:
+
+- pytest;
+- pytest-cov.
+
+## Comando `vendas-cli`
+
+O comando é criado pelo arquivo `pyproject.toml`:
+
+```toml
+[project.scripts]
+vendas-cli = 'cli:main'
+```
+
+Essa configuração significa:
+
+```text
+vendas-cli
+    ↓
+arquivo cli.py
+    ↓
+função main()
+```
 
 ## Limitações atuais
 
@@ -249,6 +355,8 @@ Essa estratégia permite trabalhar com arquivos CSV gerados por diferentes progr
 - Adicionar testes para o módulo `cli.py`.
 - Permitir salvar o relatório diretamente em um arquivo.
 - Melhorar a formatação dos valores monetários para o padrão brasileiro.
+- Criar integração contínua com GitHub Actions.
+- Publicar uma versão instalável do projeto.
 
 ## Autor
 
