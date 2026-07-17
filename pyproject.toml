@@ -1,0 +1,36 @@
+[build-system]
+requires = ['setuptools>=68']
+build-backend = 'setuptools.build_meta'
+
+
+[project]
+name = 'gerador-relatorios-vendas'
+version = '0.1.0'
+description = 'Programa de linha de comando para gerar relatórios de vendas a partir de arquivos CSV.'
+requires-python = '>=3.9'
+dependencies = []
+
+
+[project.optional-dependencies]
+dev = [
+    'pytest>=9.0',
+    'pytest-cov>=7.0',
+]
+
+
+[project.scripts]
+vendas-cli = 'cli:main'
+
+
+[tool.setuptools]
+py-modules = [
+    'core',
+    'cli',
+]
+
+
+[tool.pytest.ini_options]
+testpaths = [
+    'tests',
+]
+addopts = '--basetemp=.pytest_temp'
